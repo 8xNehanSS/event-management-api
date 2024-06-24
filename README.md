@@ -7,7 +7,7 @@ This repository contains the source code for the Event Management API. The API a
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/EventManagementAPI.git
+   git clone https://github.com/8xNehanSS/event-management-api.git
    ```
 
 2. Install the required dependencies:
