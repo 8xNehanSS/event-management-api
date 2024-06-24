@@ -14,7 +14,7 @@ app.get("/api/", (req, res) => {
 });
 
 const eventRoutes = require("./routes/event");
-app.use("/api/event", eventRoutes);
+app.use("/api/v1/event", eventRoutes);
 
 app.listen(port, () => {
   console.log(`Service started on ${port}`);
