@@ -2,17 +2,6 @@ const db = require("../database/database");
 const ParseResponse = require("../utils/response");
 const Joi = require("joi");
 
-module.exports = {
-  addEvent,
-  getEvents,
-  getEvent,
-  updateEvent,
-  deleteEvent,
-  addAttendee,
-  removeAttendee,
-  getEventAttendees,
-};
-
 const eventSchema = Joi.object({
   name: Joi.string().min(1).required(),
   description: Joi.string().min(1).required(),
@@ -146,3 +135,14 @@ function addAttendee(req, res) {}
 function removeAttendee(req, res) {}
 
 function getEventAttendees(req, res) {}
+
+module.exports = {
+  addEvent,
+  getEvents,
+  getEvent,
+  updateEvent,
+  deleteEvent,
+  addAttendee,
+  removeAttendee,
+  getEventAttendees,
+};
