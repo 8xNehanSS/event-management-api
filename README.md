@@ -45,7 +45,7 @@ The API provides the following endpoints:
 
 - `GET /get-attendees/:eventID`: Get attendees of a specific event.
 - `POST /add-attendee/:eventID`: Create a new attendee.
-- `DELETE /delete-attendee/:`: Delete an attendee.
+- `DELETE /delete-attendee/:attendeeID`: Delete an attendee.
 
 For detailed documentation on how to use each endpoint, refer to the API documentation (under development).
 
