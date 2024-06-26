@@ -141,7 +141,39 @@ function deleteEvent(req, res) {
   }
 }
 
-function addAttendee(req, res) {}
+function addAttendee(req, res) {
+  try {
+    let err = validateSchema(req, res, attendeeSchema);
+    if (err) {
+      return res.status(400).send(ParseResponse(400, err, null));
+    }
+    const { firstname, lastname, contact } = req.body;
+    const eventID = parseInt(req.params.id);
+    db.run(
+      "INSERT INTO attendees (firstname, lastname, contact, event_id) VALUES (?, ?, ?, ?)",
+      [firstname, lastname, contact, eventID],
+      function (err) {
+        if (err) {
+          return res
+            .status(400)
+            .send(ParseResponse(400, "Error adding to database", null));
+        }
+        res.send(
+          ParseResponse(200, "Success", {
+            id: this.lastID,
+            firstname,
+            lastname,
+            contact,
+            eventID,
+          })
+        );
+      }
+    );
+  } catch (error) {
+    console.log(error.stack);
+    res.status(400).send(ParseResponse(400, error.message, null));
+  }
+}
 
 function removeAttendee(req, res) {}
 
