@@ -20,14 +20,18 @@ const eventSchema = Joi.object({
   date: Joi.date().iso().required(),
 });
 
+function validateSchema(req, res, schema) {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res
+      .status(400)
+      .send(ParseResponse(400, error.details[0].message, null));
+  }
+}
+
 function addEvent(req, res) {
   try {
-    const { error } = eventSchema.validate(req.body);
-    if (error) {
-      return res
-        .status(400)
-        .send(ParseResponse(400, error.details[0].message, null));
-    }
+    validateSchema(req, res, eventSchema);
     const [name, description, venue, date] = req.body;
     db.run(
       "INSERT INTO events (name, description, venue, date) VALUES (?, ?, ?, ?)",
@@ -83,7 +87,40 @@ function getEvent(req, res) {
   }
 }
 
-function updateEvent(req, res) {}
+function updateEvent(req, res) {
+  try {
+    validateSchema(req, res, eventSchema);
+    const eventID = parseInt(req.params.id);
+    const [name, description, venue, date] = req.body;
+    db.run(
+      "UPDATE events SET name=?, description=?, venue=?, date=? WHERE id=?",
+      [name, description, venue, date, eventID],
+      function (err) {
+        if (err) {
+          return res
+            .status(400)
+            .send(ParseResponse(400, "Error updating database", null));
+        }
+        if (this.changes === 0) {
+          return res
+            .status(404)
+            .send(ParseResponse(404, "Event not found", null));
+        }
+        res.send(
+          ParseResponse(200, "Success", {
+            id: eventID,
+            name,
+            description,
+            venue,
+            date,
+          })
+        );
+      }
+    );
+  } catch (error) {
+    res.status(400).send(ParseResponse(400, error.message, null));
+  }
+}
 
 function deleteEvent(req, res) {}
 
