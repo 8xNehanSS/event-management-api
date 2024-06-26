@@ -6,20 +6,22 @@ const eventSchema = Joi.object({
   name: Joi.string().min(1).required(),
   description: Joi.string().min(1).required(),
   venue: Joi.string().min(1).required(),
-  date: Joi.date(),
+  date: Joi.date().iso().required(),
 });
 
 function validateSchema(req, res, schema) {
   const { error } = schema.validate(req.body);
   if (error) {
-    res.status(400).send(ParseResponse(400, error.message, null));
-    return;
+    return error.message;
   }
 }
 
 function addEvent(req, res) {
   try {
-    validateSchema(req, res, eventSchema);
+    let err = validateSchema(req, res, eventSchema);
+    if (err) {
+      return res.status(400).send(ParseResponse(400, err, null));
+    }
     const { name, description, venue, date } = req.body;
     db.run(
       "INSERT INTO events (name, description, venue, date) VALUES (?, ?, ?, ?)",
@@ -78,7 +80,10 @@ function getEvent(req, res) {
 
 function updateEvent(req, res) {
   try {
-    validateSchema(req, res, eventSchema);
+    let err = validateSchema(req, res, eventSchema);
+    if (err) {
+      return res.status(400).send(ParseResponse(400, err, null));
+    }
     const eventID = parseInt(req.params.id);
     const { name, description, venue, date } = req.body;
     db.run(
