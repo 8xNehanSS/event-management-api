@@ -9,6 +9,12 @@ const eventSchema = Joi.object({
   date: Joi.date().iso().required(),
 });
 
+const attendeeSchema = Joi.object({
+  firstname: Joi.string().min(1).required(),
+  lastname: Joi.string().min(1).required(),
+  contact: Joi.string().min(1).required(),
+});
+
 function validateSchema(req, res, schema) {
   const { error } = schema.validate(req.body);
   if (error) {
