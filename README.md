@@ -2,6 +2,9 @@
 
 This repository contains the source code for the Event Management API. The API allows users to manage events, including creating, updating, and deleting events.
 
+![Screenshot 2024-06-26 213444](https://github.com/8xNehanSS/event-management-api/assets/139059809/f0e86b91-b490-48bb-946f-9849caeff308)
+
+
 ## Installation
 
 1. Clone the repository:
