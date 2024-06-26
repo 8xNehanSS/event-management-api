@@ -122,7 +122,24 @@ function updateEvent(req, res) {
   }
 }
 
-function deleteEvent(req, res) {}
+function deleteEvent(req, res) {
+  try {
+    const eventID = parseInt(req.params.id);
+    db.all("DELETE FROM events WHERE id=?", [eventID], function (err, rows) {
+      if (err) {
+        res.status(500).send(ParseResponse(500, err.message, null));
+      }
+      if (this.changes === 0) {
+        return res
+          .status(404)
+          .send(ParseResponse(404, "Event not found", null));
+      }
+      res.status(200).send(ParseResponse(200, "Success", rows[0]));
+    });
+  } catch (error) {
+    res.status(400).send(ParseResponse(400, error.message, null));
+  }
+}
 
 function addAttendee(req, res) {}
 
