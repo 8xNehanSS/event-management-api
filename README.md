@@ -32,16 +32,20 @@ This repository contains the source code for the Event Management API. The API a
 Once the server is running, you can access the API endpoints using the following base URL:
 
 ```
-http://localhost:3000/api/v1
+http://localhost:3000/api/v1/events
 ```
 
 The API provides the following endpoints:
 
-- `GET /events`: Get a list of all events.
-- `GET /events/:id`: Get details of a specific event.
-- `POST /events`: Create a new event.
-- `PUT /events/:id`: Update an existing event.
-- `DELETE /events/:id`: Delete an event.
+- `GET /get-all-events`: Get a list of all events.
+- `GET /get-event/:eventID`: Get details of a specific event.
+- `POST /add-event`: Create a new event.
+- `PUT /update-event/:eventID`: Update an existing event.
+- `DELETE /delete-event/:eventID`: Delete an event.
+
+- `GET /get-attendees/:eventID`: Get attendees of a specific event.
+- `POST /add-attendee/:eventID`: Create a new attendee.
+- `DELETE /delete-attendee/:`: Delete an attendee.
 
 For detailed documentation on how to use each endpoint, refer to the API documentation (under development).
 
