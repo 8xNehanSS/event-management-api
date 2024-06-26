@@ -198,7 +198,30 @@ function removeAttendee(req, res) {
   }
 }
 
-function getEventAttendees(req, res) {}
+function getEventAttendees(req, res) {
+  try {
+    const eventID = parseInt(req.params.id);
+    db.all(
+      "SELECT * FROM attendees WHERE event_id=?",
+      [eventID],
+      function (err, rows) {
+        if (err) {
+          res.status(500).send(ParseResponse(500, err.message, null));
+        }
+        if (rows.length === 0) {
+          return res
+            .status(404)
+            .send(
+              ParseResponse(404, "Event not found or zero attendees", null)
+            );
+        }
+        res.status(200).send(ParseResponse(200, "Success", rows));
+      }
+    );
+  } catch (error) {
+    res.status(400).send(ParseResponse(400, error.message, null));
+  }
+}
 
 module.exports = {
   addEvent,
