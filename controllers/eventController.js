@@ -1,4 +1,5 @@
 const db = require("../database/database");
+const logError = require("../utils/logger");
 const ParseResponse = require("../utils/response");
 const Joi = require("joi");
 
@@ -50,7 +51,7 @@ function addEvent(req, res) {
       }
     );
   } catch (error) {
-    console.log(error.stack);
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
@@ -80,6 +81,7 @@ function getEvent(req, res) {
       res.status(200).send(ParseResponse(200, "Success", rows[0]));
     });
   } catch (error) {
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
@@ -118,6 +120,7 @@ function updateEvent(req, res) {
       }
     );
   } catch (error) {
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
@@ -137,6 +140,7 @@ function deleteEvent(req, res) {
       res.status(200).send(ParseResponse(200, "Success", rows[0]));
     });
   } catch (error) {
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
@@ -170,7 +174,7 @@ function addAttendee(req, res) {
       }
     );
   } catch (error) {
-    console.log(error.stack);
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
@@ -194,6 +198,7 @@ function removeAttendee(req, res) {
       }
     );
   } catch (error) {
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
@@ -219,6 +224,7 @@ function getEventAttendees(req, res) {
       }
     );
   } catch (error) {
+    logError(error);
     res.status(400).send(ParseResponse(400, error.message, null));
   }
 }
