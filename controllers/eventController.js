@@ -223,6 +223,23 @@ function getEventAttendees(req, res) {
   }
 }
 
+// function addTests(req, res) {
+//   //running a .sql file to populate the database with test data
+//   const fs = require("fs");
+//   const path = require("path");
+//   const sql = fs
+//     .readFileSync(path.join(__dirname, "../database/testdata.sql"))
+//     .toString();
+//   db.exec(sql, function (err) {
+//     if (err) {
+//       return res
+//         .status(400)
+//         .send(ParseResponse(400, "Error adding test data", null));
+//     }
+//     res.send(ParseResponse(200, "Success", null));
+//   });
+// }
+
 module.exports = {
   addEvent,
   getEvents,
@@ -232,4 +249,5 @@ module.exports = {
   addAttendee,
   removeAttendee,
   getEventAttendees,
+  // addTests,
 };

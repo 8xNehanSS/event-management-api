@@ -11,4 +11,6 @@ router.post("/add-attendee/:id", eventController.addAttendee);
 router.delete("/remove-attendee/:id", eventController.removeAttendee);
 router.get("/get-attendees/:id", eventController.getEventAttendees);
 
+// router.get("/test", eventController.addTests);
+
 module.exports = router;
