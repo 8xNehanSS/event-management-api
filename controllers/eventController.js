@@ -68,7 +68,7 @@ function getEvents(req, res) {
 
 function getEvent(req, res) {
   try {
-    const eventID = parseInt(req.params.id);
+    const eventID = parseInt(req.params.eventID);
     db.all("SELECT * FROM events WHERE id=?", [eventID], function (err, rows) {
       if (err) {
         res.status(500).send(ParseResponse(500, err.message, null));
@@ -92,7 +92,7 @@ function updateEvent(req, res) {
     if (err) {
       return res.status(400).send(ParseResponse(400, err, null));
     }
-    const eventID = parseInt(req.params.id);
+    const eventID = parseInt(req.params.eventID);
     const { name, description, venue, date } = req.body;
     db.run(
       "UPDATE events SET name=?, description=?, venue=?, date=? WHERE id=?",
@@ -127,7 +127,7 @@ function updateEvent(req, res) {
 
 function deleteEvent(req, res) {
   try {
-    const eventID = parseInt(req.params.id);
+    const eventID = parseInt(req.params.eventID);
     db.all("DELETE FROM events WHERE id=?", [eventID], function (err, rows) {
       if (err) {
         res.status(500).send(ParseResponse(500, err.message, null));
@@ -152,7 +152,7 @@ function addAttendee(req, res) {
       return res.status(400).send(ParseResponse(400, err, null));
     }
     const { firstname, lastname, contact } = req.body;
-    const eventID = parseInt(req.params.id);
+    const eventID = parseInt(req.params.eventID);
     db.run(
       "INSERT INTO attendees (firstname, lastname, contact, event_id) VALUES (?, ?, ?, ?)",
       [firstname, lastname, contact, eventID],
@@ -181,7 +181,7 @@ function addAttendee(req, res) {
 
 function removeAttendee(req, res) {
   try {
-    const attendeeID = parseInt(req.params.id);
+    const attendeeID = parseInt(req.params.attendeeID);
     db.all(
       "DELETE FROM attendees WHERE id=?",
       [attendeeID],
@@ -205,7 +205,7 @@ function removeAttendee(req, res) {
 
 function getEventAttendees(req, res) {
   try {
-    const eventID = parseInt(req.params.id);
+    const eventID = parseInt(req.params.eventID);
     db.all(
       "SELECT * FROM attendees WHERE event_id=?",
       [eventID],
