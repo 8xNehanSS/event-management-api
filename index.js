@@ -7,7 +7,6 @@ const logError = require("./utils/logger");
 
 //var declarations
 const app = express();
-const port = process.env.PORT;
 
 app.use(express.json());
 
@@ -18,7 +17,9 @@ app.get("/api/", (req, res) => {
 const eventRoutes = require("./routes/event");
 app.use("/api/v1/events", eventRoutes);
 
-app.listen(port, async () => {
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, "0.0.0.0", async () => {
   const chalk = await import("chalk");
   figlet("E.M. API", (err, data) => {
     if (err) {
@@ -29,10 +30,11 @@ app.listen(port, async () => {
     }
 
     console.log(chalk.default.green(data));
-    console.log(chalk.default.blue(`Service started on port ${port}`));
+    console.log(chalk.default.blue(`Service started on port ${PORT}`));
     console.log(
       chalk.default.yellow(`Startup time: ${new Date().toLocaleString()}`)
     );
     console.log(chalk.default.green("Ready to handle requests..."));
   });
 });
+
